@@ -40,11 +40,12 @@
             100% { box-shadow: 0 0 100px #ffff00, inset 0 0 100px #ffff00; }
         }
         canvas { position: fixed; top: 0; left: 0; z-index: 1; }
+        .content { position: relative; z-index: 20; display: flex; flex-direction: column; align-items: center; }
         h1 {
             font-size: 3.5em;
             text-shadow: 0 0 20px #fff, 0 0 40px #ff00ff, 0 0 60px #00ffff;
             animation: glow 2s ease-in-out infinite alternate;
-            margin: 0 0 5px 0; z-index: 20;
+            margin: 0 0 5px 0;
         }
         @keyframes glow {
             from { text-shadow: 0 0 20px #fff, 0 0 40px #ff00ff, 0 0 60px #00ffff; }
@@ -54,34 +55,21 @@
             font-size: 1.6em; color: #ffff00;
             text-shadow: 0 0 20px #ff0000;
             animation: pulse 1.5s infinite;
-            margin: 5px 0; z-index: 20;
+            margin: 5px 0;
         }
         @keyframes pulse {
             0% { transform: scale(1); } 50% { transform: scale(1.07); } 100% { transform: scale(1); }
         }
-        /* ZONE OR */
         .gold-zone {
-            position: relative;
-            display: inline-block;
-            margin: 20px 0;
-            cursor: pointer;
-            z-index: 20;
-            width: 340px;
+            position: relative; display: inline-block;
+            margin: 20px 0; cursor: pointer; width: 340px;
         }
         .gold-cover {
-            width: 100%;
-            padding: 22px 15px;
-            box-sizing: border-box;
+            width: 100%; padding: 22px 15px; box-sizing: border-box;
             background: linear-gradient(135deg, #ffd700, #ffed4e, #ffa500, #ffd700);
-            border: 6px solid #ffaa00;
-            border-radius: 22px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-weight: bold;
-            color: #6b3a00;
+            border: 6px solid #ffaa00; border-radius: 22px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+            font-weight: bold; color: #6b3a00;
             text-shadow: 1px 1px 3px rgba(255,255,255,0.6);
             box-shadow: 0 10px 35px rgba(255,215,0,0.9), inset 0 5px 12px rgba(255,255,255,0.7);
             animation: goldShine 3s ease-in-out infinite alternate;
@@ -91,36 +79,23 @@
             from { box-shadow: 0 10px 35px rgba(255,215,0,0.9), inset 0 5px 12px rgba(255,255,255,0.7); }
             to { box-shadow: 0 20px 55px rgba(255,215,0,1), inset 0 12px 22px rgba(255,255,255,0.95); }
         }
-        .gold-cover .teasing {
-            font-size: 1.1em;
-            line-height: 1.4;
-        }
-        .gold-cover .instruction-or {
-            font-size: 1em;
-            opacity: 0.85;
-        }
-        /* PRÉNOM : caché par défaut, affiché APRÈS reveal au-dessus HORS zone */
+        .gold-cover .teasing { font-size: 1.1em; line-height: 1.4; }
+        .gold-cover .instruction-or { font-size: 1em; opacity: 0.85; }
         .prenom-revele {
-            display: none;
-            margin-top: 15px;
-            font-size: 4em;
-            font-weight: bold;
+            display: none; margin-top: 15px;
+            font-size: 4.5em; font-weight: bold;
             color: #ff00ff;
             text-shadow: 0 0 40px #ffff00, 0 0 60px #ff1493, 0 0 80px #00ffff;
-            animation: prenomPulse 1s infinite;
-            z-index: 30;
+            animation: prenomPulse 0.8s infinite;
         }
         @keyframes prenomPulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
             100% { transform: scale(1); }
         }
         .bas-page {
-            font-size: 1.3em;
-            text-shadow: 0 0 10px #fff;
-            margin: 10px 0;
-            z-index: 20;
-            animation: bounce 2s infinite;
+            font-size: 1.3em; text-shadow: 0 0 10px #fff;
+            margin: 10px 0; animation: bounce 2s infinite;
         }
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
@@ -132,107 +107,229 @@
             border: 3px solid #ffff00; border-radius: 50%;
             width: 60px; height: 60px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.5em;
-            backdrop-filter: blur(10px);
+            font-size: 1.5em; backdrop-filter: blur(10px);
             transition: all 0.3s ease; z-index: 50;
         }
     </style>
 </head>
 <body>
-    <canvas id="sparkles"></canvas>
+    <canvas id="mainCanvas"></canvas>
     <div class="disco-ball"></div>
-    <h1>🎉 FÉLICITATIONS JAD ! 🎉</h1>
-    <p class="date">Papa du bébé né le 12 avril 2026 👶</p>
-
-    <div class="gold-zone" id="goldZone">
-        <div class="gold-cover">
-            <div class="teasing">✨ Vous allez découvrir<br>le magnifique prénom<br>de cet enfant ✨</div>
-            <div class="instruction-or">👆 Touchez la zone en OR ! 👆</div>
+    <div class="content">
+        <h1>🎉 FÉLICITATIONS JAD ! 🎉</h1>
+        <p class="date">Papa du bébé né le 12 avril 2026 👶</p>
+        <div class="gold-zone" id="goldZone">
+            <div class="gold-cover">
+                <div class="teasing">✨ Vous allez découvrir<br>le magnifique prénom<br>de cet enfant ✨</div>
+                <div class="instruction-or">👆 Touchez la zone en OR ! 👆</div>
+            </div>
         </div>
+        <div class="prenom-revele" id="prenomRevele">PAUL 🌟</div>
+        <p class="bas-page">Le plus beau bébé du monde t'attend ! 💖🍼</p>
     </div>
-
-    <div class="prenom-revele" id="prenomRevele">PAUL 🌟</div>
-
-    <p class="bas-page">Le plus beau bébé du monde t'attend ! 💖🍼</p>
-
     <button class="music-btn" id="musicBtn">🎵</button>
     <audio id="bgMusic" loop preload="auto" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
     <script>
-        const canvas = document.getElementById('sparkles');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const sparkles = [];
-        for (let i = 0; i < 150; i++) {
-            sparkles.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*2, vy: (Math.random()-0.5)*2, life: Math.random()*2});
-        }
-        function animateSparkles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            sparkles.forEach(s => {
-                ctx.save();
-                ctx.translate(s.x, s.y);
-                ctx.rotate(s.life * Math.PI);
-                ctx.fillStyle = `hsl(${s.life*60},100%,70%)`;
-                ctx.shadowBlur = 10; ctx.shadowColor = ctx.fillStyle;
-                ctx.fillRect(-3, -3, 6, 6);
-                ctx.restore();
-                s.x += s.vx; s.y += s.vy; s.life += 0.05;
-                if (s.life > 2 || s.x < 0 || s.x > canvas.width || s.y < 0 || s.y > canvas.height) {
-                    s.x = Math.random()*canvas.width; s.y = Math.random()*canvas.height;
-                    s.vx = (Math.random()-0.5)*2; s.vy = (Math.random()-0.5)*2; s.life = 0;
-                }
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+    // === PARTICULES PAILLETTES DE BASE ===
+    const sparkles = [];
+    for (let i = 0; i < 200; i++) {
+        sparkles.push({
+            x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+            vx: (Math.random()-0.5)*2, vy: (Math.random()-0.5)*2,
+            life: Math.random()*2, size: Math.random()*4+2,
+            hue: Math.random()*360
+        });
+    }
+
+    // === FEUX D'ARTIFICE ===
+    const fireworks = [];
+    const particles = [];
+    let fireworksActive = false;
+
+    function launchFirework() {
+        const x = Math.random() * canvas.width;
+        const y = canvas.height;
+        const targetY = Math.random() * canvas.height * 0.5;
+        fireworks.push({ x, y, targetY, vx: (Math.random()-0.5)*3, vy: -12, hue: Math.random()*360 });
+    }
+
+    function explodeFirework(fw) {
+        const count = 80 + Math.floor(Math.random()*60);
+        for (let i = 0; i < count; i++) {
+            const angle = (Math.PI*2/count)*i;
+            const speed = 2 + Math.random()*5;
+            particles.push({
+                x: fw.x, y: fw.y,
+                vx: Math.cos(angle)*speed,
+                vy: Math.sin(angle)*speed,
+                life: 1, decay: 0.012 + Math.random()*0.015,
+                hue: fw.hue + Math.random()*60 - 30,
+                size: 2 + Math.random()*3,
+                tail: true
             });
-            requestAnimationFrame(animateSparkles);
         }
-        animateSparkles();
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+        // Extra paillettes étoiles
+        for (let i = 0; i < 30; i++) {
+            particles.push({
+                x: fw.x + (Math.random()-0.5)*20,
+                y: fw.y + (Math.random()-0.5)*20,
+                vx: (Math.random()-0.5)*10,
+                vy: (Math.random()-0.5)*10 - 3,
+                life: 1, decay: 0.008,
+                hue: Math.random()*360, size: 4+Math.random()*4,
+                star: true
+            });
+        }
+    }
 
-        const goldZone = document.getElementById('goldZone');
-        const prenomRevele = document.getElementById('prenomRevele');
-        let revealed = false;
+    // Animation principale
+    function animate() {
+        ctx.fillStyle = 'rgba(0,0,0,0.08)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        function revealPrenom() {
-            if (!revealed) {
-                revealed = true;
-                prenomRevele.style.display = 'block';
-                if (navigator.vibrate) navigator.vibrate(300);
-                for (let i = 0; i < 120; i++) {
-                    setTimeout(() => {
-                        const idx = Math.floor(Math.random()*sparkles.length);
-                        sparkles[idx].vx = (Math.random()-0.5)*8;
-                        sparkles[idx].vy = (Math.random()-0.5)*8;
-                        sparkles[idx].life = 0;
-                    }, i * 20);
-                }
+        // Paillettes de base
+        sparkles.forEach(s => {
+            ctx.save();
+            ctx.translate(s.x, s.y);
+            ctx.rotate(s.life * Math.PI);
+            ctx.fillStyle = `hsla(${s.hue},100%,70%,0.9)`;
+            ctx.shadowBlur = 8; ctx.shadowColor = ctx.fillStyle;
+            ctx.fillRect(-s.size/2, -s.size/2, s.size, s.size);
+            ctx.restore();
+            s.x += s.vx; s.y += s.vy; s.life += 0.04;
+            if (s.life > 2 || s.x < 0 || s.x > canvas.width || s.y < 0 || s.y > canvas.height) {
+                s.x = Math.random()*canvas.width; s.y = Math.random()*canvas.height;
+                s.vx = (Math.random()-0.5)*2; s.vy = (Math.random()-0.5)*2;
+                s.life = 0; s.hue = Math.random()*360;
+            }
+        });
+
+        // Fusées
+        for (let i = fireworks.length-1; i >= 0; i--) {
+            const fw = fireworks[i];
+            ctx.beginPath();
+            ctx.arc(fw.x, fw.y, 4, 0, Math.PI*2);
+            ctx.fillStyle = `hsl(${fw.hue},100%,80%)`;
+            ctx.shadowBlur = 15; ctx.shadowColor = ctx.fillStyle;
+            ctx.fill();
+            fw.x += fw.vx; fw.y += fw.vy; fw.vy += 0.3;
+            if (fw.y <= fw.targetY) {
+                explodeFirework(fw);
+                fireworks.splice(i, 1);
             }
         }
 
-        goldZone.addEventListener('click', revealPrenom);
-        let startX, startY, isDragging = false;
-        goldZone.addEventListener('touchstart', e => {
-            e.preventDefault();
-            startX = e.touches[0].clientX; startY = e.touches[0].clientY;
-            revealPrenom();
-        }, {passive: false});
-        goldZone.addEventListener('touchmove', e => {
-            if (!revealed && startX && (Math.abs(e.touches[0].clientX-startX)>15 || Math.abs(e.touches[0].clientY-startY)>15)) revealPrenom();
-        });
-        goldZone.addEventListener('mousedown', () => isDragging = true);
-        document.addEventListener('mousemove', () => { if (isDragging && !revealed) revealPrenom(); });
-        document.addEventListener('mouseup', () => isDragging = false);
+        // Particules explosion
+        for (let i = particles.length-1; i >= 0; i--) {
+            const p = particles[i];
+            ctx.save();
+            ctx.globalAlpha = p.life;
+            if (p.star) {
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.life * Math.PI * 3);
+                ctx.fillStyle = `hsl(${p.hue},100%,80%)`;
+                ctx.shadowBlur = 20; ctx.shadowColor = ctx.fillStyle;
+                // étoile
+                ctx.beginPath();
+                for (let j = 0; j < 5; j++) {
+                    const a = (Math.PI*2/5)*j - Math.PI/2;
+                    const a2 = (Math.PI*2/5)*j + Math.PI/5 - Math.PI/2;
+                    j===0 ? ctx.moveTo(Math.cos(a)*p.size, Math.sin(a)*p.size) : ctx.lineTo(Math.cos(a)*p.size, Math.sin(a)*p.size);
+                    ctx.lineTo(Math.cos(a2)*p.size*0.4, Math.sin(a2)*p.size*0.4);
+                }
+                ctx.closePath(); ctx.fill();
+            } else {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fillStyle = `hsl(${p.hue},100%,70%)`;
+                ctx.shadowBlur = 12; ctx.shadowColor = ctx.fillStyle;
+                ctx.fill();
+            }
+            ctx.restore();
+            p.x += p.vx; p.y += p.vy;
+            p.vy += 0.08; p.vx *= 0.98;
+            p.life -= p.decay;
+            if (p.life <= 0) particles.splice(i, 1);
+        }
 
-        const musicBtn = document.getElementById('musicBtn');
-        const bgMusic = document.getElementById('bgMusic');
-        bgMusic.volume = 0.3;
-        let isPlaying = false;
-        musicBtn.addEventListener('click', async () => {
-            try {
-                if (isPlaying) { bgMusic.pause(); musicBtn.textContent = '🎵'; }
-                else { await bgMusic.play(); musicBtn.textContent = '⏸️'; }
-                isPlaying = !isPlaying;
-            } catch(e) {}
-        });
+        // Lancer feux d'artifice en continu après reveal
+        if (fireworksActive && Math.random() < 0.06) launchFirework();
+
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // === REVEAL ===
+    const goldZone = document.getElementById('goldZone');
+    const prenomRevele = document.getElementById('prenomRevele');
+    let revealed = false;
+
+    function revealPrenom() {
+        if (!revealed) {
+            revealed = true;
+            fireworksActive = true;
+            prenomRevele.style.display = 'block';
+            if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 400]);
+
+            // Salve initiale : 12 feux d'artifice immédiats
+            for (let w = 0; w < 12; w++) {
+                setTimeout(() => launchFirework(), w * 150);
+            }
+
+            // Explosion de 600 paillettes du centre
+            const cx = canvas.width/2, cy = canvas.height/2;
+            for (let i = 0; i < 600; i++) {
+                setTimeout(() => {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 3 + Math.random() * 12;
+                    particles.push({
+                        x: cx + (Math.random()-0.5)*80,
+                        y: cy + (Math.random()-0.5)*80,
+                        vx: Math.cos(angle)*speed,
+                        vy: Math.sin(angle)*speed - 4,
+                        life: 1, decay: 0.007 + Math.random()*0.012,
+                        hue: Math.random()*360,
+                        size: 3+Math.random()*5,
+                        star: Math.random() > 0.5
+                    });
+                }, Math.random() * 800);
+            }
+        }
+    }
+
+    goldZone.addEventListener('click', revealPrenom);
+    let startX, startY, isDragging = false;
+    goldZone.addEventListener('touchstart', e => {
+        e.preventDefault();
+        startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+        revealPrenom();
+    }, {passive: false});
+    goldZone.addEventListener('touchmove', e => {
+        if (!revealed && startX && (Math.abs(e.touches[0].clientX-startX)>15 || Math.abs(e.touches[0].clientY-startY)>15)) revealPrenom();
+    });
+    goldZone.addEventListener('mousedown', () => isDragging = true);
+    document.addEventListener('mousemove', () => { if (isDragging && !revealed) revealPrenom(); });
+    document.addEventListener('mouseup', () => isDragging = false);
+
+    // === MUSIQUE ===
+    const musicBtn = document.getElementById('musicBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    bgMusic.volume = 0.3;
+    let isPlaying = false;
+    musicBtn.addEventListener('click', async () => {
+        try {
+            if (isPlaying) { bgMusic.pause(); musicBtn.textContent = '🎵'; }
+            else { await bgMusic.play(); musicBtn.textContent = '⏸️'; }
+            isPlaying = !isPlaying;
+        } catch(e) {}
+    });
     </script>
 </body>
 </html>
